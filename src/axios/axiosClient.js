@@ -2,8 +2,7 @@ import axios from "axios";
 
 export const axiosClient = axios.create();
 
-const baseUrl =
-  "https://5fd2-2400-adc7-1118-9300-3177-5838-5b1c-4ad3.ngrok.io/";
+const baseUrl = "http://localhost:7000/";
 
 axiosClient.defaults.baseURL = baseUrl;
 

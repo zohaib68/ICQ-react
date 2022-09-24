@@ -1,5 +1,6 @@
 import { Button, Grid, TextField } from "@mui/material";
 import React, { useState } from "react";
+import { btnStyles, primaryColor } from "../../../../Crud/styles";
 
 import {
   workerCategoryOptions,
@@ -64,7 +65,11 @@ export const FilterWorkers = ({ filterWorkers }) => {
         lg={12}
         xl={12}
       >
-        <Button onClick={() => searchWorker()} variant="contained">
+        <Button
+          onClick={() => searchWorker()}
+          sx={{ ...btnStyles }}
+          variant="contained"
+        >
           Filter
         </Button>
       </Grid>

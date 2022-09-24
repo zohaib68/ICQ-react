@@ -24,3 +24,19 @@ export const capitalizeFirstLetter = (str) => {
   string = string?.toLowerCase();
   return firstLetter.concat(string);
 };
+
+export const activeSideBarBackground = (pathName, key) => {
+  return pathName === key
+    ? {
+        color: "white",
+        backgroundColor: "#1976d2",
+        "&:hover": {
+          color: "white",
+          backgroundColor: "#1976d2",
+        },
+      }
+    : "";
+};
+export const activeSideBarColor = (pathName, key) => {
+  return pathName === key ? "white" : "";
+};

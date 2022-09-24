@@ -44,7 +44,7 @@ import {
 
 const theme = createTheme();
 
-export default function SignUp() {
+export const CVform = () => {
   const user = useSelector((state) => state?.user?.user);
   console.log(user, "userConsole");
   const { _id: userId } = user;
@@ -78,8 +78,6 @@ export default function SignUp() {
       })
         .then()
         .catch();
-      try {
-      } catch (err) {}
     },
   });
 
@@ -175,4 +173,4 @@ export default function SignUp() {
       </Container>
     </ThemeProvider>
   );
-}
+};

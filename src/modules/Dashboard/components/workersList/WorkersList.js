@@ -63,8 +63,8 @@ export const WorkersList = () => {
             <TableRow>
               <CustomTableCellHeader>First Name</CustomTableCellHeader>
               <CustomTableCellHeader>Last Name</CustomTableCellHeader>
-              <CustomTableCellHeader>Worker Type</CustomTableCellHeader>
-              <CustomTableCellHeader>Worker Experience</CustomTableCellHeader>
+              <CustomTableCellHeader>Category</CustomTableCellHeader>
+              <CustomTableCellHeader>Experience</CustomTableCellHeader>
             </TableRow>
           </TableHead>
           <TableBody>

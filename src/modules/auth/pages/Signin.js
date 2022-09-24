@@ -43,15 +43,6 @@ const theme = createTheme();
 export default function SignInSide() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  //   const handleSubmit = (event) => {
-  //     event.preventDefault();
-  //     const data = new FormData(event.currentTarget);
-  //     console.log({
-  //       email: data.get('email'),
-  //       password: data.get('password'),
-  //     });
-  //   };
-
   const LoginSchema = Yup.object().shape({
     email: Yup.string()
       .email("Email must be a valid email address")
@@ -75,9 +66,11 @@ export default function SignInSide() {
           const { data } = res?.data;
           console.log(data, "okokoko");
           dispatch(hadleLogin({ ...data }));
-          navigate("/recruiter");
+          navigate("/home");
         })
         .catch();
+      dispatch(hadleLogin({ role: "RECRUITER" }));
+      navigate("/home");
     },
   });
 
