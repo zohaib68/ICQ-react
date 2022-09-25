@@ -1,3 +1,6 @@
+import { toast } from "react-toastify";
+import { secondaryColor } from "../Crud/styles";
+
 export const convertToBase64 = async (file) => {
   return new Promise((resolve, reject) => {
     const filReader = new FileReader();
@@ -29,14 +32,49 @@ export const activeSideBarBackground = (pathName, key) => {
   return pathName === key
     ? {
         color: "white",
-        backgroundColor: "#1976d2",
+        backgroundColor: secondaryColor,
         "&:hover": {
           color: "white",
-          backgroundColor: "#1976d2",
+          backgroundColor: secondaryColor,
         },
       }
     : "";
 };
 export const activeSideBarColor = (pathName, key) => {
-  return pathName === key ? "white" : "";
+  return pathName === key ? { color: "white" } : {};
+};
+
+export const errorToast = (msg) => {
+  return toast.error(msg, {
+    position: "bottom-right",
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+};
+export const successToast = (msg) =>
+  toast.success(msg, {
+    position: "bottom-right",
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+
+export const dynamicObjCreator = (obj) => {
+  let objectToreturn = {};
+  for (const i in obj) {
+    if (obj[i]?.length > 0) {
+      objectToreturn = {
+        ...objectToreturn,
+        [i]: obj[i],
+      };
+    }
+  }
+  return objectToreturn;
 };

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { errorToast, successToast } from "../utils/utils";
 
 export const axiosClient = axios.create();
 
@@ -13,14 +14,14 @@ axiosClient.interceptors.request.use(function (config) {
 });
 axiosClient.interceptors.response.use(
   function (response) {
-    alert("success");
+    successToast("success");
     return response;
   },
   function (error) {
     if (error?.name === "CanceledError") {
       return null;
     } else {
-      alert("error");
+      errorToast("error");
     }
 
     return Promise.reject(error);

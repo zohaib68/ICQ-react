@@ -1,4 +1,4 @@
-import { SIGIN } from "./user.types";
+import { LOGOUT, SIGIN } from "./user.types";
 
 const initialState = {
   user: "",
@@ -6,7 +6,8 @@ const initialState = {
 export const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case SIGIN:
-      console.log(action.payLoad, "payLOad");
+      return { ...state, user: action.payLoad };
+    case LOGOUT:
       return { ...state, user: action.payLoad };
     default:
       return state;

@@ -7,8 +7,9 @@ export const hadleLogin = (payLoad) => {
     payLoad: payLoad,
   };
 };
-export const handleLogout = () => {
+export const handleLogout = (payLoad) => {
   return {
     type: LOGOUT,
+    payLoad: payLoad,
   };
 };

@@ -13,26 +13,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import * as Yup from "yup";
-import {
-  useFormik,
-  Form,
-  FormikProvider,
-  FieldArray,
-  Field,
-  getIn,
-} from "formik";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormLabel from "@mui/material/FormLabel";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import About from "../components/About";
-import Education from "../components/Education";
-import Experience from "../components/Experience";
-import Title from "../../common/components/Title";
-import WorkerLayout from "../../common/components/WorkerLayout";
-import { MenuItem } from "@mui/material";
+import { useFormik, Form, FormikProvider, Field } from "formik";
 import { convertToBase64 } from "../../../utils/utils";
 import { postReq } from "../../../Crud/Crud";
 import { UPLOAD_CV } from "../../../Crud/constsants";
@@ -41,6 +22,9 @@ import {
   workerCategoryOptions,
   workerExpOptions,
 } from "../../common/components/WorkerOptions";
+import { CustomInput } from "../../common/components/CustomInputField";
+import { Collapse, Fade, Paper, Slide, Zoom } from "@mui/material";
+import { btnStyles, secondaryColor } from "../../../Crud/styles";
 
 const theme = createTheme();
 
@@ -89,87 +73,96 @@ export const CVform = () => {
     handleChange,
     setFieldValue,
   } = formik;
-
+  let hasMount = true;
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="md">
-        <CssBaseline />
-        <center>
-          <Typography
-            component="h2"
-            variant="h4"
-            color="primary"
-            gutterBottom
-            style={{ marginTop: "40px" }}
-          >
-            Create Your CV
-          </Typography>
-        </center>
+        <Slide mountOnEnter unmountOnExit in={hasMount} timeout={500}>
+          <Box component={Paper} sx={{ py: 3, px: 2, mt: 5 }}>
+            <CssBaseline />
+            <center>
+              <Typography
+                component="h2"
+                variant="h4"
+                color={secondaryColor}
+                gutterBottom
+              >
+                Create Your CV
+              </Typography>
+            </center>
 
-        <FormikProvider value={formik} onSubmit={handleSubmit}>
-          <Form autoComplete="off">
-            <Box sx={{ mt: 3 }}>
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    select
-                    fullWidth
-                    id="workerType"
-                    label="*Worker Type"
-                    name="workerType"
-                    {...getFieldProps("workerType")}
-                    error={Boolean(touched.workerType && errors.workerType)}
-                    helperText={touched.workerType && errors.workerType}
-                  >
-                    {workerCategoryOptions}
-                  </TextField>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    fullWidth
-                    select
-                    id="experience"
-                    label="*Experience"
-                    name="experience"
-                    {...getFieldProps("experience")}
-                    error={Boolean(touched.experience && errors.experience)}
-                    helperText={touched.experience && errors.experience}
-                  >
-                    {workerExpOptions}
-                  </TextField>
-                </Grid>
-                <Grid item xs={12} sm={12}>
-                  <Field name="cvPdf">
-                    {(props) => (
-                      <TextField
-                        onChange={(e) => {
-                          handleChange(e);
-                          setFieldValue("cvPdf", e?.target.files[0]);
-                        }}
+            <FormikProvider value={formik} onSubmit={handleSubmit}>
+              <Form autoComplete="off">
+                <Box sx={{ mt: 3 }}>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} sm={6}>
+                      <CustomInput
+                        select
                         fullWidth
-                        id="cvPdf"
-                        label="*CV"
-                        name="cvPdf"
-                        type="file"
-                        {...props}
-                        error={Boolean(touched.cvPdf && errors.cvPdf)}
-                        helperText={touched.cvPdf && errors.cvPdf}
-                      />
-                    )}
-                  </Field>
-                </Grid>
-              </Grid>
-            </Box>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Create CV
-            </Button>
-          </Form>
-        </FormikProvider>
+                        id="workerType"
+                        label="*Worker Type"
+                        name="workerType"
+                        {...getFieldProps("workerType")}
+                        error={Boolean(touched.workerType && errors.workerType)}
+                        helperText={touched.workerType && errors.workerType}
+                      >
+                        {workerCategoryOptions}
+                      </CustomInput>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <CustomInput
+                        fullWidth
+                        select
+                        id="experience"
+                        label="*Experience"
+                        name="experience"
+                        {...getFieldProps("experience")}
+                        error={Boolean(touched.experience && errors.experience)}
+                        helperText={touched.experience && errors.experience}
+                      >
+                        {workerExpOptions}
+                      </CustomInput>
+                    </Grid>
+                    <Grid item xs={12} sm={12}>
+                      <Field name="cvPdf">
+                        {(props) => (
+                          <CustomInput
+                            onChange={(e) => {
+                              handleChange(e);
+                              setFieldValue("cvPdf", e?.target.files[0]);
+                            }}
+                            fullWidth
+                            id="cvPdf"
+                            name="cvPdf"
+                            type="file"
+                            {...props}
+                            error={Boolean(touched.cvPdf && errors.cvPdf)}
+                            helperText={touched.cvPdf && errors.cvPdf}
+                          />
+                        )}
+                      </Field>
+                    </Grid>
+                  </Grid>
+                </Box>
+                <Box
+                  sx={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2, ...btnStyles, width: "50%" }}
+                  >
+                    Create CV
+                  </Button>
+                </Box>
+              </Form>
+            </FormikProvider>
+          </Box>
+        </Slide>
       </Container>
     </ThemeProvider>
   );

@@ -1,6 +1,8 @@
-import { Button, Grid, TextField } from "@mui/material";
+import { Button, Grid, MenuItem } from "@mui/material";
 import React, { useState } from "react";
-import { btnStyles, primaryColor } from "../../../../Crud/styles";
+import { btnStyles } from "../../../../Crud/styles";
+import { dynamicObjCreator, errorToast } from "../../../../utils/utils";
+import { CustomInput } from "../../../common/components/CustomInputField";
 
 import {
   workerCategoryOptions,
@@ -11,8 +13,10 @@ export const FilterWorkers = ({ filterWorkers }) => {
   const [values, setValues] = useState({
     exp: "",
     cat: "",
+    catNum: "",
+    expNum: "",
   });
-  const { exp, cat } = values;
+  const { exp, cat, expNum, catNum } = values;
   const onChangeHandler = (e, key) => {
     const { value } = e?.target;
     setValues((p) => ({ ...p, [key]: value }));
@@ -20,16 +24,19 @@ export const FilterWorkers = ({ filterWorkers }) => {
   const searchWorker = () => {
     console.log(exp, "category", cat);
     if (!exp && !cat) {
-      alert("error");
+      errorToast(
+        "Please select at least one search filter either Experienrce or Category!"
+      );
     } else {
-      let filters = JSON.stringify({ experience: exp, category: cat });
-      filterWorkers(`/?filters=${filters}`);
+      let filtersObj = dynamicObjCreator({ ...values });
+
+      filterWorkers(`/?filters=${JSON.stringify(filtersObj)}`);
     }
   };
   return (
     <Grid sx={{ p: 2 }} container columnSpacing={2} rowSpacing={2}>
       <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-        <TextField
+        <CustomInput
           select
           fullWidth
           size="small"
@@ -39,11 +46,12 @@ export const FilterWorkers = ({ filterWorkers }) => {
           value={exp}
           onChange={(e) => onChangeHandler(e, "exp")}
         >
+          <MenuItem value={""}>Select</MenuItem>
           {workerExpOptions}
-        </TextField>
+        </CustomInput>
       </Grid>
       <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-        <TextField
+        <CustomInput
           select
           fullWidth
           size="small"
@@ -53,8 +61,37 @@ export const FilterWorkers = ({ filterWorkers }) => {
           value={cat}
           onChange={(e) => onChangeHandler(e, "cat")}
         >
+          <MenuItem value={""}>Select</MenuItem>
           {workerCategoryOptions}
-        </TextField>
+        </CustomInput>
+      </Grid>
+      <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+        <CustomInput
+          fullWidth
+          size="small"
+          id="filterWorkerExpNUm"
+          label="Required Woker Experience No."
+          name="filterWorkerExpNUm"
+          value={expNum}
+          type="number"
+          inputProps={{ min: 4, max: 10 }}
+          onChange={(e) => onChangeHandler(e, "expNum")}
+        />
+      </Grid>
+      <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+        <CustomInput
+          fullWidth
+          size="small"
+          id="filterWorkerCategoryNUm"
+          label="Required Woker Category No."
+          name="filterWorkerCategoryNUm"
+          value={catNum}
+          type="number"
+          inputProps={{ min: 4, max: 10 }}
+          onChange={(e) => onChangeHandler(e, "catNum")}
+        >
+          {workerCategoryOptions}
+        </CustomInput>
       </Grid>
       <Grid
         sx={{ display: "flex", justifyContent: "end" }}

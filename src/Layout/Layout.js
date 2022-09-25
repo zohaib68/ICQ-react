@@ -9,7 +9,6 @@ import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import Badge from "@mui/material/Badge";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -21,10 +20,17 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { useDispatch, useSelector } from "react-redux";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import { activeSideBarBackground, activeSideBarColor } from "../utils/utils";
-import { Navigate } from "react-router";
+import {
+  activeSideBarBackground,
+  activeSideBarColor,
+  capitalizeFirstLetter,
+} from "../utils/utils";
+import { useNavigate } from "react-router";
+import RecordVoiceOverIcon from "@mui/icons-material/RecordVoiceOver";
 import { handleLogout } from "../Redux/user/usr.actions";
-import { btnStyles, primaryColor } from "../Crud/styles";
+import { btnStyles, secondaryColor } from "../Crud/styles";
+import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
+import { CustomBadge } from "../modules/common/components/CustomBadge";
 
 const Copyright = (props) => {
   return (
@@ -50,6 +56,7 @@ const drawerWidth = 240;
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
+  backgroundColor: secondaryColor,
   zIndex: theme.zIndex.drawer + 1,
   transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
@@ -98,8 +105,9 @@ export const Layout = ({ children }) => {
   const toggleDrawer = () => {
     setOpen(!open);
   };
+  const navigate = useNavigate();
   let { pathname } = window.location;
-
+  let currentRoute = pathname.replace("/", "");
   return (
     <div>
       <ThemeProvider theme={theme}>
@@ -130,16 +138,19 @@ export const Layout = ({ children }) => {
                 noWrap
                 sx={{ flexGrow: 1 }}
               >
-                Dashboard
+                {capitalizeFirstLetter(currentRoute)}
               </Typography>
-              <IconButton color="inherit">
-                <Badge badgeContent={4} color="secondary">
+              <IconButton sx={{ color: "white", mt: 0.7, mx: 1 }}>
+                <CustomBadge badgeContent={4}>
                   <NotificationsIcon />
-                </Badge>
+                </CustomBadge>
               </IconButton>
               <IconButton color="inherit">
                 <Button
-                  onClick={() => dispatch(handleLogout())}
+                  onClick={() => {
+                    dispatch(handleLogout(""));
+                    navigate("/");
+                  }}
                   variant="contained"
                   sx={{
                     ...btnStyles,
@@ -167,27 +178,55 @@ export const Layout = ({ children }) => {
             <Divider />
             <List component="nav">
               <ListItemButton
+                onClick={() => navigate("/home")}
                 sx={{
                   ...activeSideBarBackground(pathname, "/home"),
                 }}
-                LinkComponent={Link}
-                to="/home"
               >
                 <ListItemIcon>
-                  <DashboardIcon sx={{ color: "white" }} />
+                  <DashboardIcon
+                    sx={{ ...activeSideBarColor(pathname, "/home") }}
+                  />
                 </ListItemIcon>
                 <ListItemText primary="Dashboard" />
               </ListItemButton>
               {role === "RECRUITER" && (
                 <ListItemButton
-                  LinkComponent={Navigate}
-                  to="/orders"
+                  onClick={() => navigate("/orders")}
                   sx={{ ...activeSideBarBackground(pathname, "/orders") }}
                 >
                   <ListItemIcon>
-                    <ShoppingCartIcon />
+                    <ShoppingCartIcon
+                      sx={{ ...activeSideBarColor(pathname, "/orders") }}
+                    />
                   </ListItemIcon>
                   <ListItemText primary="Orders" />
+                </ListItemButton>
+              )}
+              {role === "ADMIN" && (
+                <ListItemButton
+                  onClick={() => navigate("/Recruiters")}
+                  sx={{ ...activeSideBarBackground(pathname, "/Recruiters") }}
+                >
+                  <ListItemIcon>
+                    <RecordVoiceOverIcon
+                      sx={{ ...activeSideBarColor(pathname, "/Recruiters") }}
+                    />
+                  </ListItemIcon>
+                  <ListItemText primary="Recruiters" />
+                </ListItemButton>
+              )}
+              {role === "ADMIN" && (
+                <ListItemButton
+                  onClick={() => navigate("/Workers")}
+                  sx={{ ...activeSideBarBackground(pathname, "/Workers") }}
+                >
+                  <ListItemIcon>
+                    <EmojiPeopleIcon
+                      sx={{ ...activeSideBarColor(pathname, "/Workers") }}
+                    />
+                  </ListItemIcon>
+                  <ListItemText primary="Workers" />
                 </ListItemButton>
               )}
 

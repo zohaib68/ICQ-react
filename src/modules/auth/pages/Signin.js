@@ -56,7 +56,6 @@ export default function SignInSide() {
       password: "",
     },
     validationSchema: LoginSchema,
-    // validationSchema:LoginSchema,
     onSubmit: async (values) => {
       console.log("Values of Form are", values);
       const { email, password } = values;
@@ -64,12 +63,11 @@ export default function SignInSide() {
       getReqWithParams(LOGIN, queryParams)
         .then((res) => {
           const { data } = res?.data;
-          console.log(data, "okokoko");
           dispatch(hadleLogin({ ...data }));
           navigate("/home");
         })
         .catch();
-      dispatch(hadleLogin({ role: "RECRUITER" }));
+      dispatch(hadleLogin({ role: "ADMIN" }));
       navigate("/home");
     },
   });

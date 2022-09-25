@@ -1,109 +1,89 @@
 import "./App.css";
 import Signin from "./modules/auth/pages/Signin";
-import Signup from "./modules/auth/pages/Signup";
 import Dashboard from "./modules/Dashboard/pages/Dashboard";
-import Router from "./routes";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Provider, useSelector } from "react-redux";
+import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistor } from "./Redux/store/store";
 import { store } from "./Redux/store/store";
 import { PublicRoute } from "./PublicRoute/PublicRoute";
 import SignUp from "./modules/auth/pages/Signup";
 import { PrivateRoute } from "./PrivateRoute/PrivateRoute";
-import { Navigate } from "react-router";
+import "react-toastify/dist/ReactToastify.css";
+import { CustomToastContainer } from "./modules/common/components/CustomToastContainer";
+import { ErrorPage } from "./ErrorPage/ErrorPage";
+import { RecruiterList } from "./modules/Recruiter/RecruiterList/RecruiterList";
+import { WorkersList } from "./modules/Dashboard/components/workersList/WorkersList";
 
 function App() {
-  // const user = useSelector((state) => state?.user?.user);
   return (
-    // <div className="App">
-    <Provider store={store}>
-      <PersistGate persistor={persistor}>
-        {/* <BrowserRouter>
-          <Router />
-        </BrowserRouter> */}
-        <BrowserRouter>
-          <Routes>
-            <Route
-              exact
-              path="/"
-              element={
-                <PublicRoute>
-                  <Signin />
-                </PublicRoute>
-              }
-            />
-            <Route exact path="*" element={<>error</>} />
-            <Route
-              exact
-              path="/signin"
-              element={
-                <PublicRoute>
-                  <Signin />
-                </PublicRoute>
-              }
-            />
-            <Route
-              exact
-              path="/signup"
-              element={
-                <PublicRoute>
-                  <SignUp />
-                </PublicRoute>
-              }
-            />
-            <Route
-              exact
-              path="/home"
-              element={
-                <PrivateRoute>
-                  <Dashboard />
-                </PrivateRoute>
-              }
-            />
-          </Routes>
-        </BrowserRouter>
-      </PersistGate>
-    </Provider>
-
-    // </div>
+    <>
+      <CustomToastContainer />
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <BrowserRouter>
+            <Routes>
+              <Route
+                exact
+                path="/"
+                element={
+                  <PublicRoute>
+                    <Signin />
+                  </PublicRoute>
+                }
+              />
+              <Route exact path="*" element={<ErrorPage />} />
+              <Route
+                exact
+                path="/signin"
+                element={
+                  <PublicRoute>
+                    <Signin />
+                  </PublicRoute>
+                }
+              />
+              <Route
+                exact
+                path="/signup"
+                element={
+                  <PublicRoute>
+                    <SignUp />
+                  </PublicRoute>
+                }
+              />
+              <Route
+                exact
+                path="/home"
+                element={
+                  <PrivateRoute>
+                    <Dashboard />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                exact
+                path="/Recruiters"
+                element={
+                  <PrivateRoute>
+                    <RecruiterList />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                exact
+                path="/Workers"
+                element={
+                  <PrivateRoute>
+                    <WorkersList />
+                  </PrivateRoute>
+                }
+              />
+            </Routes>
+          </BrowserRouter>
+        </PersistGate>
+      </Provider>
+    </>
   );
 }
 
 export default App;
-
-export const TetsRouter = () => {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          exac
-          path="/signin"
-          element={
-            <PublicRoute>
-              <Signin />
-            </PublicRoute>
-          }
-        />
-        <Route
-          exac
-          path="/signup"
-          element={
-            <PublicRoute>
-              <SignUp />
-            </PublicRoute>
-          }
-        />
-        <Route
-          exac
-          path="/home"
-          element={
-            <PrivateRoute>
-              <Dashboard />
-            </PrivateRoute>
-          }
-        />
-      </Routes>
-    </BrowserRouter>
-  );
-};
