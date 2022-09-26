@@ -26,13 +26,12 @@ import {
   errorToast,
   successToast,
 } from "../../../../utils/utils";
-import { CustomSpinner } from "../../../common/components/CustomSpinner";
 import { btnStyles } from "../../../../Crud/styles";
 import { TableSuspenser } from "../../../common/components/TableSuspenser";
 import { CustomTableRow } from "../../../common/components/CustomTableRows";
 import { CustomTabelCell } from "../../../common/components/CustomTableCell";
 import { useSelector } from "react-redux";
-import { Navigate } from "react-router";
+
 import GppMaybeIcon from "@mui/icons-material/GppMaybe";
 
 const theme = createTheme();

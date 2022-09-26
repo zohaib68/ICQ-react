@@ -25,12 +25,12 @@ import {
   activeSideBarColor,
   capitalizeFirstLetter,
 } from "../utils/utils";
-import { useNavigate } from "react-router";
 import RecordVoiceOverIcon from "@mui/icons-material/RecordVoiceOver";
 import { handleLogout } from "../Redux/user/usr.actions";
 import { btnStyles, secondaryColor } from "../Crud/styles";
 import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
 import { CustomBadge } from "../modules/common/components/CustomBadge";
+import { history } from "../utils/utils";
 
 const Copyright = (props) => {
   return (
@@ -105,7 +105,7 @@ export const Layout = ({ children }) => {
   const toggleDrawer = () => {
     setOpen(!open);
   };
-  const navigate = useNavigate();
+
   let { pathname } = window.location;
   let currentRoute = pathname.replace("/", "");
   return (
@@ -149,7 +149,6 @@ export const Layout = ({ children }) => {
                 <Button
                   onClick={() => {
                     dispatch(handleLogout(""));
-                    navigate("/");
                   }}
                   variant="contained"
                   sx={{
@@ -178,7 +177,7 @@ export const Layout = ({ children }) => {
             <Divider />
             <List component="nav">
               <ListItemButton
-                onClick={() => navigate("/home")}
+                onClick={() => history.push("/home")}
                 sx={{
                   ...activeSideBarBackground(pathname, "/home"),
                 }}
@@ -192,7 +191,7 @@ export const Layout = ({ children }) => {
               </ListItemButton>
               {role === "RECRUITER" && (
                 <ListItemButton
-                  onClick={() => navigate("/orders")}
+                  onClick={() => history.push("/orders")}
                   sx={{ ...activeSideBarBackground(pathname, "/orders") }}
                 >
                   <ListItemIcon>
@@ -205,7 +204,7 @@ export const Layout = ({ children }) => {
               )}
               {role === "ADMIN" && (
                 <ListItemButton
-                  onClick={() => navigate("/Recruiters")}
+                  onClick={() => history.push("/Recruiters")}
                   sx={{ ...activeSideBarBackground(pathname, "/Recruiters") }}
                 >
                   <ListItemIcon>
@@ -218,7 +217,7 @@ export const Layout = ({ children }) => {
               )}
               {role === "ADMIN" && (
                 <ListItemButton
-                  onClick={() => navigate("/Workers")}
+                  onClick={() => history.push("/Workers")}
                   sx={{ ...activeSideBarBackground(pathname, "/Workers") }}
                 >
                   <ListItemIcon>

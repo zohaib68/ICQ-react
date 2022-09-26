@@ -1,7 +1,7 @@
 import "./App.css";
 import Signin from "./modules/auth/pages/Signin";
 import Dashboard from "./modules/Dashboard/pages/Dashboard";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistor } from "./Redux/store/store";
@@ -14,14 +14,15 @@ import { CustomToastContainer } from "./modules/common/components/CustomToastCon
 import { ErrorPage } from "./ErrorPage/ErrorPage";
 import { RecruiterList } from "./modules/Recruiter/RecruiterList/RecruiterList";
 import { WorkersList } from "./modules/Dashboard/components/workersList/WorkersList";
-
+import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
+import { history } from "./utils/utils";
 function App() {
   return (
     <>
       <CustomToastContainer />
       <Provider store={store}>
         <PersistGate persistor={persistor}>
-          <BrowserRouter>
+          <HistoryRouter history={history}>
             <Routes>
               <Route
                 exact
@@ -79,7 +80,7 @@ function App() {
                 }
               />
             </Routes>
-          </BrowserRouter>
+          </HistoryRouter>
         </PersistGate>
       </Provider>
     </>

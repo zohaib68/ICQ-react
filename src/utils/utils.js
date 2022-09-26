@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 import { secondaryColor } from "../Crud/styles";
-
+import { createBrowserHistory } from "history";
 export const convertToBase64 = async (file) => {
   return new Promise((resolve, reject) => {
     const filReader = new FileReader();
@@ -78,3 +78,4 @@ export const dynamicObjCreator = (obj) => {
   }
   return objectToreturn;
 };
+export const history = createBrowserHistory();

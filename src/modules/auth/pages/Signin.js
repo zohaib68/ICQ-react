@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -14,8 +14,8 @@ import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import * as Yup from "yup";
 import { useFormik, Form, FormikProvider } from "formik";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
-import { getReq, getReqWithParams, postReq } from "../../../Crud/Crud";
+import { useNavigate } from "react-router-dom";
+import { getReqWithParams } from "../../../Crud/Crud";
 import { LOGIN } from "../../../Crud/constsants";
 import { useDispatch } from "react-redux";
 import { hadleLogin } from "../../../Redux/user/usr.actions";
@@ -67,8 +67,6 @@ export default function SignInSide() {
           navigate("/home");
         })
         .catch();
-      dispatch(hadleLogin({ role: "ADMIN" }));
-      navigate("/home");
     },
   });
 
